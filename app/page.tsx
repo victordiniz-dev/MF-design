@@ -186,10 +186,17 @@ function ProjectCard({ project }: { project: typeof projectCarousels[0] }) {
   };
 
   const active = project.slides[current];
+  const alignImageTop = ["Retrato em miniatura", "Mascote PMX Pneus", "Personagem Pneumax"].includes(active.title);
 
   return (
     <article className={`project ${project.isMain ? "project-main" : ""} reveal`}>
-      <div className={`project-image ${active.cropClass}`} style={{ backgroundImage: `url('${active.image}')` }}>
+      <div className={`project-image ${active.cropClass}`}>
+        <img
+          className={`project-image-media object-cover ${alignImageTop ? "md:object-top" : ""}`}
+          style={alignImageTop ? { objectPosition: "center top" } : undefined}
+          src={active.image}
+          alt={active.title}
+        />
         <span>{active.tag}</span>
 
         {project.slides.length > 1 && (
