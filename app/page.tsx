@@ -1,12 +1,12 @@
 "use client";
 
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 
 const services = [
-  { n: "01", title: "Modelagem 3D", text: "Criamos ou adaptamos arquivos tridimensionais com medidas, encaixes e detalhes pensados para o seu uso.", benefit: "Da referência ao arquivo pronto", image: "/about-3d.png", position: "center" },
-  { n: "02", title: "Impressão 3D", text: "Produção em PLA, PETG ou resina, com controle de material, escala, resistência e acabamento.", benefit: "Precisão camada por camada", image: "/portfolio-prototype.png", position: "65% center" },
-  { n: "03", title: "Personalização", text: "Presentes, objetos, personagens e peças exclusivas que não existem prontas em nenhuma prateleira.", benefit: "Uma peça verdadeiramente sua", image: "/hero-3d.png", position: "70% center" },
-  { n: "04", title: "Projetos corporativos", text: "Brindes, protótipos e soluções sob medida para marcas, empresas, eventos e ativações.", benefit: "Sua marca em forma de objeto", image: "/portfolio-trophy.png", position: "center 35%" },
+  { n: "01", title: "Modelagem 3D", text: "Transformamos sua ideia em um projeto exclusivo, pensado para ganhar forma do jeito que você imaginou.", benefit: "Da ideia para a realidade", image: "/Lampada_7.webp", position: "center" },
+  { n: "02", title: "Impressão 3D", text: "Produzimos peças únicas com cuidado em cada detalhe, prontas para decorar, presentear ou facilitar o seu dia a dia.", benefit: "Sua criação ganha forma", image: "/Estante.webp", position: "center" },
+  { n: "03", title: "Personalização", text: "Criamos presentes, personagens e objetos cheios de significado, feitos especialmente para você.", benefit: "Uma peça verdadeiramente sua", image: "/Boneco_7.webp", position: "center" },
+  { n: "04", title: "Projetos corporativos", text: "Criamos peças que valorizam sua marca e tornam presentes, eventos e ambientes ainda mais memoráveis.", benefit: "Sua marca em forma de objeto", image: "/Placa_7.jpeg", position: "center" },
 ];
 
 const processSteps = [
@@ -92,28 +92,28 @@ const projectCarousels = [
     isMain: true,
     slides: [
       {
-        image: "/hero-3d.png",
+        image: "/No_sei_2_otimizado.webp",
         tag: "SOB ENCOMENDA",
-        category: "OBJETO DECORATIVO",
-        title: "Escultura Entrelaços",
-        specs: "PLA PREMIUM · 28 CM · 14H IMPRESSÃO",
-        cropClass: "crop-a"
-      },
-      {
-        image: "/portfolio-trophy.png",
-        tag: "SOB ENCOMENDA",
-        category: "ARTE & DECORAÇÃO",
-        title: "Escultura Orgânica Gold",
-        specs: "RESINA PREMIUM · 32 CM · PINTURA MANUAL",
+        category: "ORGANIZAÇÃO E DECORAÇÃO",
+        title: "Conjunto de porta-objetos",
+        specs: "DOIS MÓDULOS · TAMPA REMOVÍVEL · ACABAMENTO TEXTURIZADO",
         cropClass: "crop-b"
       },
       {
-        image: "/portfolio-prototype.png",
+        image: "/Castelo_otimizado.webp",
         tag: "SOB ENCOMENDA",
-        category: "MODELAGEM CONCEITUAL",
-        title: "Estrutura Paramétrica",
-        specs: "PETG FOSCO · ESC. 1:1 · ACABAMENTO PREMIUM",
+        category: "DECORAÇÃO TEMÁTICA",
+        title: "Globo iluminado com castelo",
+        specs: "CÚPULA DECORATIVA · ILUMINAÇÃO INTERNA · BASE PERSONALIZADA",
         cropClass: "crop-c"
+      },
+      {
+        image: "/No_sei_otimizado.webp",
+        tag: "SOB ENCOMENDA",
+        category: "ORGANIZAÇÃO PARA AMBIENTES",
+        title: "Organizador modular de bancada",
+        specs: "DIVISÓRIAS FUNCIONAIS · DESIGN COMPACTO · PROJETO SOB MEDIDA",
+        cropClass: "crop-a"
       }
     ]
   },
@@ -122,21 +122,30 @@ const projectCarousels = [
     isMain: false,
     slides: [
       {
-        image: "/portfolio-prototype.png",
+        image: "/Gatinho_otimizado.webp",
         tag: "PERSONALIZADO",
-        category: "PROTÓTIPO TÉCNICO",
-        title: "Forma Modular",
-        specs: "PETG · ESC. 1:4 · ACABAMENTO FOSCO",
+        category: "HOMENAGEM PERSONALIZADA",
+        title: "Heroína dos Gatinhos",
+        specs: "MINIATURA TEMÁTICA · MEDALHA PERSONALIZADA · PINTURA COLORIDA",
         cropClass: "crop-b"
       },
       {
-        image: "/hero-3d.png",
+        image: "/Cachorrosoucachorronao_otimizado.webp",
         tag: "PERSONALIZADO",
-        category: "ENGENHARIA REVERSA",
-        title: "Engrenagem Helicoidal",
-        specs: "ABS REFORÇADO · ENCAIXE DE PRECISÃO",
+        category: "PERSONALIZAÇÃO PET",
+        title: "Memorial personalizado do seu pet",
+        specs: "MINIATURA REALISTA · QUADRO ILUSTRADO · BASE DECORATIVA",
+        cropClass: "crop-a"
+      },
+      {
+        image: "/Boneco_9_otimizado.webp",
+        tag: "PERSONALIZADO",
+        category: "MINIATURA SOB MEDIDA",
+        title: "Retrato em miniatura",
+        specs: "PERSONAGEM PERSONALIZADO · ACESSÓRIO MODELADO · BASE ILUSTRADA",
         cropClass: "crop-a"
       }
+      
     ]
   },
   {
@@ -144,19 +153,19 @@ const projectCarousels = [
     isMain: false,
     slides: [
       {
-        image: "/portfolio-trophy.png",
+        image: "/Corporativo_1.webp",
         tag: "CORPORATIVO",
-        category: "PEÇA DE MARCA",
-        title: "Troféu Movimento",
-        specs: "RESINA · 22 CM · PINTURA MANUAL",
+        category: "MASCOTE CORPORATIVO",
+        title: "Personagem Pneumax",
+        specs: "IDENTIDADE VISUAL APLICADA · ESCULTURA 3D · PINTURA PERSONALIZADA",
         cropClass: "crop-c"
       },
       {
-        image: "/about-3d.png",
+        image: "/Corporativo_2_melhorado.webp",
         tag: "CORPORATIVO",
-        category: "BRINDE EXCLUSIVO",
-        title: "Luminária de Marca",
-        specs: "PLA TRANSLÚCIDO · LED INTEGRADO",
+        category: "MASCOTE PARA MARCAS",
+        title: "Mascote PMX Pneus",
+        specs: "PERSONAGEM TEMÁTICO · ELEMENTOS DA MARCA · ACABAMENTO PREMIUM",
         cropClass: "crop-a"
       }
     ]
@@ -219,7 +228,19 @@ function ProjectCard({ project }: { project: typeof projectCarousels[0] }) {
   );
 }
 
-function Logo({ small = false }: { small?: boolean }) { return <span className={`logo ${small ? "logo-small" : ""}`}><b>MF</b><span>DESIGN E</span><em>MODELAGEM 3D</em></span> }
+function Logo({ small = false }: { small?: boolean }) {
+  if (small) return (
+    <img
+      className="logo-image"
+      src="/logo_mf_png.png"
+      alt="MF Design e Modelagem 3D"
+      width={88}
+      height={58}
+      style={{ width: 88, height: 58, objectFit: "contain" }}
+    />
+  );
+  return <span className="logo"><img className="logo-mark" src="/logo_mf_png.png" alt="MF" width={112} height={75} /><span>DESIGN E</span><em>MODELAGEM 3D</em></span>;
+}
 
 function WhatsappIcon({ size = 18, style = {} }: { size?: number; style?: React.CSSProperties }) {
   return (
@@ -369,6 +390,8 @@ export default function Home() {
   const [name, setName] = useState("");
   const [service, setService] = useState("");
   const [idea, setIdea] = useState("");
+  const [expandedReview, setExpandedReview] = useState<string | null>(null);
+  const headerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const onScroll = () => setSolid(window.scrollY > 50); onScroll(); window.addEventListener("scroll", onScroll, { passive: true });
@@ -377,6 +400,24 @@ export default function Home() {
     return () => { window.removeEventListener("scroll", onScroll); observer.disconnect() };
   }, []);
 
+  useEffect(() => {
+    if (!menu) return;
+
+    const closeOnOutsideClick = (event: PointerEvent) => {
+      if (!headerRef.current?.contains(event.target as Node)) setMenu(false);
+    };
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMenu(false);
+    };
+
+    document.addEventListener("pointerdown", closeOnOutsideClick);
+    document.addEventListener("keydown", closeOnEscape);
+    return () => {
+      document.removeEventListener("pointerdown", closeOnOutsideClick);
+      document.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [menu]);
+
   const handleWhatsAppSubmit = (e: FormEvent) => {
     e.preventDefault();
     const text = `Olá! Meu nome é *${name}*.${service ? `\n*Serviço de interesse:* ${service}` : ""}${idea ? `\n\n*Detalhes da ideia:* ${idea}` : ""}`;
@@ -384,18 +425,26 @@ export default function Home() {
     window.open(url, "_blank");
   };
   return <main>
-    <header className={`header ${solid ? "solid" : ""} ${menu ? "open" : ""}`}>
+    <header ref={headerRef} className={`header ${solid ? "solid" : ""} ${menu ? "open" : ""}`}>
       <a href="#inicio" aria-label="MF Design e Modelagem 3D - Início"><Logo small /></a>
-      <nav aria-label="Navegação principal"><a href="#inicio">Início</a><a href="#sobre">Sobre nós</a><a href="#servicos">Serviços</a><a href="#portfolio">Portfólio</a><a href="#contato">Contato</a></nav>
+      <nav id="main-navigation" aria-label="Navegação principal" aria-hidden={!menu}><a href="#inicio" onClick={() => setMenu(false)}>Início</a><a href="#sobre" onClick={() => setMenu(false)}>Sobre nós</a><a href="#servicos" onClick={() => setMenu(false)}>Serviços</a><a href="#portfolio" onClick={() => setMenu(false)}>Portfólio</a><a href="https://www.google.com/search?sca_esv=9d29e6ff159d06e4&sxsrf=APpeQntNHpeGsUEcr_B1AwkLvtR_yH0q9A:1786975096582&kgmid=/g/11yqxxrc6r&q=MF+Design+e+Modelagem+3D+-+Impress%C3%A3o+3D+Personalizada&shem=dlvs1,epsd1,ltae,rimspwouoe&shndl=30&source=sh/x/loc/uni/m1/1&kgs=05bfb0987bfaa6de&utm_source=dlvs1,epsd1,ltae,rimspwouoe,sh/x/loc/uni/m1/1" target="_blank" rel="noreferrer" onClick={() => setMenu(false)}>Avaliações</a><a href="#contato" onClick={() => setMenu(false)}>Contato</a></nav>
       <a className="button button-gold header-cta" href="https://wa.me/5527997845945" target="_blank" rel="noreferrer"><WhatsappIcon /> Fale conosco <span>↗</span></a>
-      <button className="menu" aria-label="Abrir menu" aria-expanded={menu} onClick={() => setMenu(!menu)}><i /><i /></button>
+      <button className="menu" type="button" aria-label={menu ? "Fechar menu" : "Abrir menu"} aria-controls="main-navigation" aria-expanded={menu} onClick={() => setMenu(!menu)}><i /><i /><i /></button>
     </header>
 
     <section className="hero" id="inicio">
-      <div className="hero-photo" /><div className="hero-shade" />
+      <div
+        className="hero-photo"
+        style={{ backgroundImage: "url('/img1.png?v=2')" }}
+        role="img"
+        aria-label="Coleção de luminárias decorativas em formato de lua e globo terrestre"
+      /><div className="hero-shade" />
       <div className="hero-content reveal visible">
-        <p className="eyebrow gold">Modelagem e impressão 3D personalizada</p>
-        <Logo />
+        <span className="logo hero-branded-logo">
+          <img src="/logo_mf_png.png" alt="MF" width={220} height={150} />
+          <span>DESIGN E</span>
+          <em>MODELAGEM 3D</em>
+        </span>
         <h1>Você imagina,<br /><span>a gente dá forma.</span></h1>
         <p className="hero-text">Transformamos referências, medidas e ideias em objetos físicos feitos especialmente para você.</p>
         <div className="actions"><a className="button button-gold" href="https://wa.me/5527997845945" target="_blank" rel="noreferrer"><WhatsappIcon /> Fale conosco <span>↗</span></a></div>
@@ -417,16 +466,13 @@ export default function Home() {
         </div>
       </div>
       <div className="about-media reveal">
-        <div className="empty-placeholder-card">
-          <div className="empty-placeholder-content">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="placeholder-icon">
-              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-              <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-              <line x1="12" y1="22.08" x2="12" y2="12"></line>
-            </svg>
-            <p className="placeholder-title">SUA IMAGEM / MODELO 3D AQUI</p>
-            <span className="placeholder-sub">Tamanho recomendado: 800 x 600 px</span>
-          </div>
+        <div className="about-image-card">
+          <img
+            src="/Lampada_rosa.webp"
+            alt="Luminária rosa personalizada produzida pela MF Design e Modelagem 3D"
+            width={800}
+            height={600}
+          />
         </div>
       </div>
     </section>
@@ -464,7 +510,7 @@ export default function Home() {
 
       <div className="google-review-grid">
         {googleReviews.map((review) => {
-          const [expanded, setExpanded] = useState(false);
+          const expanded = expandedReview === review.name;
           const isVictorReview = review.name === "Victor Hugo Pimentel Pozes";
 
           return (
@@ -486,7 +532,7 @@ export default function Home() {
               <p className={`google-review-text ${expanded ? "expanded" : ""}`}>{review.text}</p>
 
               {isVictorReview && (
-                <button type="button" className="google-review-toggle" onClick={() => setExpanded((prev) => !prev)}>
+                <button type="button" className="google-review-toggle" onClick={() => setExpandedReview(expanded ? null : review.name)}>
                   {expanded ? "Ler menos" : "Ler mais"}
                 </button>
               )}
@@ -719,6 +765,7 @@ export default function Home() {
       </div>
       <div className="footer-bottom">
         <span>© 2026 MF DESIGN E MODELAGEM 3D</span>
+        <a href="https://ejuvv.com/" target="_blank" rel="noreferrer">FEITO POR EJUVV ↗</a>
         <a href="#inicio">VOLTAR AO TOPO ↑</a>
       </div>
     </footer>
