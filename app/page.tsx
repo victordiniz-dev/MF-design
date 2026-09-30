@@ -258,25 +258,6 @@ function WhatsappIcon({ size = 18, style = {} }: { size?: number; style?: React.
   );
 }
 
-function InstagramIcon({ size = 18 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ display: "inline-block", verticalAlign: "middle" }}>
-      <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-    </svg>
-  );
-}
-
-function EmailIcon({ size = 18 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ display: "inline-block", verticalAlign: "middle" }}>
-      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-      <polyline points="22,6 12,13 2,6"></polyline>
-    </svg>
-  );
-}
-
 function ServicesCarousel() {
   const [current, setCurrent] = useState(0);
   const [touchStart, setTouchStart] = useState<number | null>(null);
@@ -394,6 +375,8 @@ function ServicesCarousel() {
 export default function Home() {
   const [menu, setMenu] = useState(false);
   const [solid, setSolid] = useState(false);
+  const [isScrolling, setIsScrolling] = useState(false);
+  const [isHome, setIsHome] = useState(true);
   const [name, setName] = useState("");
   const [service, setService] = useState("");
   const [idea, setIdea] = useState("");
@@ -401,10 +384,24 @@ export default function Home() {
   const headerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const onScroll = () => setSolid(window.scrollY > 50); onScroll(); window.addEventListener("scroll", onScroll, { passive: true });
+    let scrollStopTimer: number | undefined;
+    const onScroll = () => {
+      setSolid(window.scrollY > 50);
+      setIsHome(window.scrollY < window.innerHeight * 0.85);
+      setIsScrolling(true);
+      window.clearTimeout(scrollStopTimer);
+      scrollStopTimer = window.setTimeout(() => {
+        setIsScrolling(false);
+      }, 700);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
     const observer = new IntersectionObserver(entries => entries.forEach(e => e.isIntersecting && e.target.classList.add("visible")), { threshold: .12 });
     document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
-    return () => { window.removeEventListener("scroll", onScroll); observer.disconnect() };
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.clearTimeout(scrollStopTimer);
+      observer.disconnect();
+    };
   }, []);
 
   useEffect(() => {
@@ -432,20 +429,18 @@ export default function Home() {
     window.open(url, "_blank");
   };
   return <main>
-    <header ref={headerRef} className={`header ${solid ? "solid" : ""} ${menu ? "open" : ""}`}>
-      <a href="#inicio" aria-label="MF Design e Modelagem 3D - Início"><Logo small /></a>
+    <header ref={headerRef} className={`header ${solid ? "solid" : ""} ${isHome ? "home" : ""} ${isScrolling ? "scrolling" : ""} ${menu ? "open" : ""}`}>
       <nav id="main-navigation" aria-label="Navegação principal" aria-hidden={!menu}><a href="#inicio" onClick={() => setMenu(false)}>Início</a><a href="#sobre" onClick={() => setMenu(false)}>Sobre nós</a><a href="#servicos" onClick={() => setMenu(false)}>Serviços</a><a href="#portfolio" onClick={() => setMenu(false)}>Portfólio</a><a href="https://www.google.com/search?sca_esv=9d29e6ff159d06e4&sxsrf=APpeQntNHpeGsUEcr_B1AwkLvtR_yH0q9A:1786975096582&kgmid=/g/11yqxxrc6r&q=MF+Design+e+Modelagem+3D+-+Impress%C3%A3o+3D+Personalizada&shem=dlvs1,epsd1,ltae,rimspwouoe&shndl=30&source=sh/x/loc/uni/m1/1&kgs=05bfb0987bfaa6de&utm_source=dlvs1,epsd1,ltae,rimspwouoe,sh/x/loc/uni/m1/1" target="_blank" rel="noreferrer" onClick={() => setMenu(false)}>Avaliações</a><a href="#contato" onClick={() => setMenu(false)}>Contato</a></nav>
-      <a className="button button-gold header-cta" href="https://wa.me/5527997845945" target="_blank" rel="noreferrer"><WhatsappIcon /> Fale conosco <span>↗</span></a>
+      <a className="button button-gold header-cta" href="https://wa.me/5527997845945" target="_blank" rel="noreferrer"><WhatsappIcon /> Quero transformar minha ideia em 3D <span>↗</span></a>
       <button className="menu" type="button" aria-label={menu ? "Fechar menu" : "Abrir menu"} aria-controls="main-navigation" aria-expanded={menu} onClick={() => setMenu(!menu)}><i /><i /><i /></button>
     </header>
 
     <section className="hero" id="inicio">
-      <div
-        className="hero-photo"
-        style={{ backgroundImage: "url('/img1.png?v=2')" }}
-        role="img"
-        aria-label="Coleção de luminárias decorativas em formato de lua e globo terrestre"
-      /><div className="hero-shade" />
+      <div className="hero-photo" aria-hidden="true">
+        <video className="hero-video" autoPlay muted loop playsInline preload="metadata">
+          <source src="/mf-home-video.mp4" type="video/mp4" />
+        </video>
+      </div><div className="hero-shade" />
       <div className="hero-content reveal visible">
         <span className="logo hero-branded-logo">
           <img src="/logo_mf_png.png" alt="MF" width={220} height={150} />
@@ -453,8 +448,8 @@ export default function Home() {
           <em>MODELAGEM 3D</em>
         </span>
         <h1>Você imagina,<br /><span>a gente dá forma.</span></h1>
-        <p className="hero-text">Transformamos referências, medidas e ideias em objetos físicos feitos especialmente para você.</p>
-        <div className="actions"><a className="button button-gold" href="https://wa.me/5527997845945" target="_blank" rel="noreferrer"><WhatsappIcon /> Fale conosco <span>↗</span></a></div>
+        <p className="hero-text">Transformamos fotos, ideias, referências e projetos em peças únicas por meio da modelagem e impressão 3D.</p>
+        <div className="actions"><a className="button button-gold" href="https://wa.me/5527997845945" target="_blank" rel="noreferrer"><WhatsappIcon /> Quero transformar minha ideia em 3D <span>↗</span></a></div>
       </div>
       <div className="hero-spec"><span></span><span></span></div>
     </section>
@@ -498,7 +493,17 @@ export default function Home() {
 
     <section className="portfolio section" id="portfolio">
       <div className="section-number reveal">PROJETOS EM DESTAQUE</div>
-      <div className="portfolio-head reveal"><div><p className="eyebrow gold">Feito sob medida</p><h2>Ideias que ganharam<br /><span>forma e presença.</span></h2></div><a href="https://wa.me/5527997845945" target="_blank" rel="noreferrer">Iniciar um projeto <span>→</span></a></div>
+      <div className="portfolio-head reveal">
+        <div>
+          <p className="eyebrow gold">Feito sob medida</p>
+          <h2>Algumas ideias que já<br /><span>ganharam forma.</span></h2>
+          <div className="portfolio-copy">
+            <p>Cada projeto começa de um jeito diferente: uma foto, uma necessidade, uma marca ou simplesmente uma ideia.</p>
+            <p>Veja algumas peças que já transformamos em realidade.</p>
+          </div>
+        </div>
+        <a href="https://wa.me/5527997845945" target="_blank" rel="noreferrer">QUERO FAZER O MEU PROJETO <span>→</span></a>
+      </div>
       <div className="project-grid">
         {projectCarousels.map((p) => (
           <ProjectCard key={p.id} project={p} />
@@ -507,11 +512,12 @@ export default function Home() {
     </section>
 
     <section className="google-reviews section">
-      <div className="section-number reveal">AVALIAÇÕES</div>
+      <div className="section-number reveal">DEPOIMENTOS</div>
       <div className="google-reviews-head reveal">
         <div>
-          <p className="eyebrow dark-gold">Depoimentos</p>
-          <h2>AVALIAÇÕES</h2>
+          <p className="eyebrow dark-gold">Experiências reais</p>
+          <h2>Quem cria com a MF recomenda.</h2>
+          <p className="google-reviews-intro">Nada fala melhor sobre o nosso trabalho do que a experiência de quem já transformou uma ideia em realidade com a gente.</p>
         </div>
       </div>
 
@@ -549,7 +555,7 @@ export default function Home() {
       </div>
 
       <div className="google-reviews-cta reveal">
-        <a className="button button-gold" href="https://www.google.com/search?sca_esv=9d29e6ff159d06e4&sxsrf=APpeQntNHpeGsUEcr_B1AwkLvtR_yH0q9A:1786975096582&kgmid=/g/11yqxxrc6r&q=MF+Design+e+Modelagem+3D+-+Impress%C3%A3o+3D+Personalizada&shem=dlvs1,epsd1,ltae,rimspwouoe&shndl=30&source=sh/x/loc/uni/m1/1&kgs=05bfb0987bfaa6de&utm_source=dlvs1,epsd1,ltae,rimspwouoe,sh/x/loc/uni/m1/1" target="_blank" rel="noreferrer">confira mais <span>↗</span></a>
+        <a className="button button-gold" href="https://www.google.com/search?sca_esv=9d29e6ff159d06e4&sxsrf=APpeQntNHpeGsUEcr_B1AwkLvtR_yH0q9A:1786975096582&kgmid=/g/11yqxxrc6r&q=MF+Design+e+Modelagem+3D+-+Impress%C3%A3o+3D+Personalizada&shem=dlvs1,epsd1,ltae,rimspwouoe&shndl=30&source=sh/x/loc/uni/m1/1&kgs=05bfb0987bfaa6de&utm_source=dlvs1,epsd1,ltae,rimspwouoe,sh/x/loc/uni/m1/1" target="_blank" rel="noreferrer">VER MAIS AVALIAÇÕES <span>↗</span></a>
       </div>
 
       <style jsx>{`
@@ -713,15 +719,13 @@ export default function Home() {
 
     <section className="contact section" id="contato">
       <div className="contact-copy reveal">
-        <p className="eyebrow dark-gold">Vamos criar juntos?</p>
-        <h2>Conte a sua ideia.<br /><span>Nós cuidamos do resto.</span></h2>
-        <p>Envie uma referência, medida ou descrição. Retornaremos com as primeiras orientações.</p>
-        <a className="instagram-btn" href="https://www.instagram.com/mfdesign_model/" target="_blank" rel="noreferrer">
-          <InstagramIcon size={22} />
-          <span>
-            <small>NOSSO INSTAGRAM</small>
-            @mfdesign_model
-          </span>
+        <p className="eyebrow dark-gold">Chamada final</p>
+        <h2>Tem uma ideia?<br /><span>Vamos transformá-la em realidade.</span></h2>
+        <p>Envie sua foto, referência, medida, projeto ou simplesmente conte o que você gostaria de criar.</p>
+        <p>Nossa equipe analisa sua ideia e orienta você sobre as melhores possibilidades de produção.</p>
+        <a className="contact-whatsapp-btn" href="https://wa.me/5527997845945" target="_blank" rel="noreferrer">
+          <WhatsappIcon size={22} />
+          <span>PEDIR MEU ORÇAMENTO PELO WHATSAPP</span>
           <i>↗</i>
         </a>
       </div>
@@ -754,7 +758,8 @@ export default function Home() {
     <footer>
       <div className="footer-top">
         <Logo />
-        <p>Ideias únicas, transformadas em objetos reais através da modelagem e impressão 3D.</p>
+        <p>Ideias, fotos e projetos transformados em peças únicas através da modelagem e impressão 3D.</p>
+        <p className="footer-services">Personalizados • Pets • Miniaturas • Brindes • Projetos corporativos • Peças sob medida</p>
       </div>
       <div className="footer-links">
         <div>
