@@ -3,17 +3,17 @@
 import { FormEvent, useEffect, useRef, useState } from "react";
 
 const services = [
-  { n: "01", title: "Modelagem 3D", text: "Transformamos sua ideia em um projeto exclusivo, pensado para ganhar forma do jeito que você imaginou.", benefit: "Da ideia para a realidade", image: "/Lampada_7.webp", position: "center" },
-  { n: "02", title: "Impressão 3D", text: "Produzimos peças únicas com cuidado em cada detalhe, prontas para decorar, presentear ou facilitar o seu dia a dia.", benefit: "Sua criação ganha forma", image: "/Estante.webp", position: "center" },
-  { n: "03", title: "Personalização", text: "Criamos presentes, personagens e objetos cheios de significado, feitos especialmente para você.", benefit: "Uma peça verdadeiramente sua", image: "/Boneco_7.webp", position: "center" },
-  { n: "04", title: "Projetos corporativos", text: "Criamos peças que valorizam sua marca e tornam presentes, eventos e ambientes ainda mais memoráveis.", benefit: "Sua marca em forma de objeto", image: "/Placa_7.jpeg", position: "center" },
+  { n: "01", title: "01 — Personalizados e presentes", text: <>Transformamos pessoas, pets e momentos especiais em peças únicas.<br /><br />Chaveiros personalizados, miniaturas de pets, bonecos chibi, estilo Funko, casais, famílias, lembranças e presentes feitos especialmente para você.</>, benefit: "Da ideia para a realidade", image: "/Lampada_7.webp", position: "center" },
+  { n: "02", title: "02 — Modelagem e impressão 3D", text: <>Tem uma ideia, mas ainda não possui o arquivo 3D?<br /><br />Desenvolvemos o projeto e produzimos sua peça de acordo com as medidas, referências e necessidades apresentadas.<br /><br />Protótipos, peças funcionais, suportes, reposições, objetos decorativos e projetos exclusivos.</>, benefit: "Sua criação ganha forma", image: "/Estante.webp", position: "center" },
+  { n: "03", title: "03 — Brindes e projetos corporativos", text: <>Transforme sua marca em algo que seus clientes realmente queiram guardar.<br /><br />Criamos brindes personalizados, chaveiros, porta-copos, porta-canetas, suportes, troféus, placas, displays e peças exclusivas para empresas, eventos e ações promocionais.<br /><br />Produção para pequenas e grandes quantidades.</>, benefit: "Uma peça verdadeiramente sua", image: "/Boneco_7.webp", position: "center" },
+  { n: "04", title: "04 — Projetos especiais", text: <>Algumas ideias não cabem em um catálogo — e é justamente aí que entramos.<br /><br />Criamos peças exclusivas a partir de referências, desenhos, medidas ou necessidades específicas.<br /><br />Se você consegue imaginar, converse com a gente sobre a possibilidade de transformar em 3D.</>, benefit: "Sua marca em forma de objeto", image: "/Placa_7.jpeg", position: "center" },
 ];
 
 const processSteps = [
   {
     n: "01",
-    title: "Você envia a ideia",
-    desc: "Referência, medida ou uma descrição inicial.",
+    title: "1. Você envia sua ideia",
+    desc: "Pode ser uma foto, referência, desenho, medida ou simplesmente uma descrição do que deseja.",
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
@@ -22,8 +22,8 @@ const processSteps = [
   },
   {
     n: "02",
-    title: "Modelagem 3D",
-    desc: "A peça é desenhada e validada digitalmente.",
+    title: "2. Desenvolvemos o projeto",
+    desc: "Analisamos sua ideia e, quando necessário, criamos a modelagem 3D para aprovação.",
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
@@ -34,8 +34,8 @@ const processSteps = [
   },
   {
     n: "03",
-    title: "Impressão",
-    desc: "Fatiamento e produção camada por camada.",
+    title: "3. Produzimos sua peça",
+    desc: "Após a aprovação, iniciamos a impressão e realizamos os acabamentos necessários.",
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <polyline points="6 9 6 2 18 2 18 9"></polyline>
@@ -46,8 +46,8 @@ const processSteps = [
   },
   {
     n: "04",
-    title: "Entrega",
-    desc: "Retirada ou envio da sua peça pronta.",
+    title: "4. Você recebe",
+    desc: "Sua peça é preparada para retirada ou envio, pronta para chegar até você.",
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <rect x="1" y="3" width="15" height="13"></rect>
@@ -462,8 +462,8 @@ export default function Home() {
           <h2>Tecnologia para criar<br />o que <span>ainda não existe.</span></h2>
         </div>
         <div className="about-copy">
-          <p>A MF Design e Modelagem 3D une criatividade, precisão técnica e fabricação digital para transformar ideias em peças reais.</p>
-          <p>Do brinde corporativo ao presente único, cada projeto recebe o mesmo cuidado: entender a necessidade, modelar com precisão e produzir com acabamento de vitrine.</p>
+          <p>Na MF Design e Modelagem 3D, transformamos ideias em peças que existem de verdade.</p>
+          <p>Criamos desde presentes personalizados e miniaturas feitas a partir de fotos até brindes corporativos, troféus, placas, peças funcionais e projetos totalmente sob medida.<br /><br />Cada projeto é desenvolvido de forma personalizada, unindo criatividade, modelagem 3D, tecnologia e cuidado nos detalhes para entregar uma peça única</p>
           <a href="#processo">Conheça nosso processo <span>→</span></a>
         </div>
       </div>
@@ -481,13 +481,13 @@ export default function Home() {
 
     <section className="services section" id="servicos">
       <div className="section-number reveal">SERVIÇOS</div>
-      <div className="services-head reveal"><div><p className="eyebrow gold">Quatro soluções principais</p><h2>O caminho certo<br />para cada <span>ideia.</span></h2></div><p>Você não precisa chegar com tudo resolvido. Basta uma referência, uma medida ou uma intenção.</p></div>
+      <div className="services-head reveal"><div><p className="eyebrow gold">Quatro soluções principais</p><h2>O que podemos<br />criar para <span>você?</span></h2></div><p>Você não precisa ter um projeto pronto. Envie uma foto, referência, medida, desenho ou simplesmente conte a sua ideia. Nós ajudamos a transformá-la em realidade.</p></div>
       <ServicesCarousel />
     </section>
 
     <section className="process section" id="processo">
       <div className="section-number reveal">COMO FUNCIONA</div>
-      <div className="process-head reveal"><p className="eyebrow dark-gold">Simples do início ao fim</p><h2>Da primeira mensagem<br />à peça <span>na sua mão.</span></h2></div>
+      <div className="process-head reveal"><p className="eyebrow dark-gold">Simples do início ao fim</p><h2>Da sua ideia<br />à <span>peça pronta.</span></h2></div>
       <div className="timeline">{processSteps.map((step) => <div className="step reveal" key={step.n}><span className="step-icon">{step.icon}</span><div><h3>{step.title}</h3><p>{step.desc}</p></div></div>)}</div>
     </section>
 
