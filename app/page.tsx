@@ -173,7 +173,7 @@ const projectCarousels = [
 ];
 
 const galleryImages = Array.from(new Map([
-  { src: "/Lampada_rosa.webp", alt: "Luminária rosa personalizada produzida pela MF Design e Modelagem 3D" },
+  { src: "/video_boneco.mp4", alt: "Vídeo de boneco produzido pela MF Design e Modelagem 3D" },
   ...services.map((service) => ({ src: service.image, alt: service.title.replace(/^\d+ — /, "") })),
   ...projectCarousels.flatMap((project) => project.slides.map((slide) => ({ src: slide.image, alt: slide.title }))),
 ].map((image) => [image.src, image])).values());
@@ -524,13 +524,10 @@ export default function Home() {
       </div>
       <div className="about-media reveal">
         <div className="about-image-card">
-          <button className="gallery-image-button" type="button" aria-label="Ampliar imagem: luminária rosa personalizada" onClick={(event) => openGallery("/Lampada_rosa.webp", event.currentTarget)}>
-            <img
-              src="/Lampada_rosa.webp"
-              alt="Luminária rosa personalizada produzida pela MF Design e Modelagem 3D"
-              width={800}
-              height={600}
-            />
+          <button className="gallery-image-button" type="button" aria-label="Ampliar vídeo do boneco" onClick={(event) => openGallery("/video_boneco.mp4", event.currentTarget)}>
+            <video autoPlay muted loop playsInline preload="metadata" aria-label="Vídeo de boneco produzido pela MF Design e Modelagem 3D">
+              <source src="/video_boneco.mp4" type="video/mp4" />
+            </video>
           </button>
         </div>
       </div>
@@ -858,7 +855,11 @@ export default function Home() {
           if (start - end > 45) showNextGalleryImage();
           if (end - start > 45) showPreviousGalleryImage();
         }}>
-          <img key={currentGalleryImage.src} src={currentGalleryImage.src} alt={currentGalleryImage.alt} />
+          {currentGalleryImage.src.endsWith(".mp4") ? (
+            <video key={currentGalleryImage.src} src={currentGalleryImage.src} aria-label={currentGalleryImage.alt} autoPlay muted loop playsInline controls />
+          ) : (
+            <img key={currentGalleryImage.src} src={currentGalleryImage.src} alt={currentGalleryImage.alt} />
+          )}
         </div>
         <button className="gallery-nav gallery-next" type="button" onClick={showNextGalleryImage} aria-label="Próxima imagem">
           <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 18 15 12 9 6" /></svg>
