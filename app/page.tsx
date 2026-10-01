@@ -173,7 +173,7 @@ const projectCarousels = [
 ];
 
 const galleryImages = Array.from(new Map([
-  { src: "/video_boneco.mp4", alt: "Vídeo de boneco produzido pela MF Design e Modelagem 3D" },
+  { src: "/video_esquerda_qualidade_aprimorada.mp4", alt: "Vídeo da esquerda com qualidade aprimorada produzido pela MF Design e Modelagem 3D" },
   ...services.map((service) => ({ src: service.image, alt: service.title.replace(/^\d+ — /, "") })),
   ...projectCarousels.flatMap((project) => project.slides.map((slide) => ({ src: slide.image, alt: slide.title }))),
 ].map((image) => [image.src, image])).values());
@@ -524,9 +524,9 @@ export default function Home() {
       </div>
       <div className="about-media reveal">
         <div className="about-image-card">
-          <button className="gallery-image-button" type="button" aria-label="Ampliar vídeo do boneco" onClick={(event) => openGallery("/video_boneco.mp4", event.currentTarget)}>
-            <video autoPlay muted loop playsInline preload="metadata" aria-label="Vídeo de boneco produzido pela MF Design e Modelagem 3D">
-              <source src="/video_boneco.mp4" type="video/mp4" />
+          <button className="gallery-image-button" type="button" aria-label="Ampliar vídeo da esquerda com qualidade aprimorada" onClick={(event) => openGallery("/video_esquerda_qualidade_aprimorada.mp4", event.currentTarget)}>
+            <video autoPlay muted loop playsInline preload="metadata" aria-label="Vídeo da esquerda com qualidade aprimorada produzido pela MF Design e Modelagem 3D">
+              <source src="/video_esquerda_qualidade_aprimorada.mp4" type="video/mp4" />
             </video>
           </button>
         </div>
